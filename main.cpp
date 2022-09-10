@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -39,44 +40,194 @@ public:
 class avatars : public global_chess
 {
 public:
-    vector<pair<string,string>> input_char1(5); //A
-    vector<pair<string,string>> input_char2(5); //B
+    vector<pair<string,string>> input_char1; //A
+    vector<pair<string,string>> input_char2; //B
     string peice;
 public:
-    int get_index(string element)
+    int get_index(string element,vector<pair<string,string>> input_char)
     {
         int current_pos=0;
         for(int k=0;k<5;k++){
-            if(input_char1[k]==character){
+            if(input_char[k].first==element){
                 current_pos=k;
                 break;
             }
         }
         return current_pos;
     }
+    bool pre_process(int current_row,int current_col)
+    {
+        if(board[current_row][current_col]=="-")
+            return true;
+        else
+            return false;
+    }
     void movement(char player, string my_character, char next) //(A,P2,F)
     {
         if(player=='A')
         {
             //[4][i]
-            if(next=='B'){
-                cout<<"Error02: Cannot move Backward further!"<<endl;
-            }
-            else{
                     peice=my_character[0];
-                    int current_row=4;
-                    int current_col=get_index(my_character); //we get i
-                    if(next=='F')//row same col down
+                    int current_pos=get_index(my_character,input_char1); //4
+                    int current_row=input_char1[current_pos].second[0]-'0';
+                    int current_col=input_char1[current_pos].second[1]-'0';
+
+                    if(next=='F')//row down, same column {on looking from upwards}
                     {
                         string temp=board[current_row][current_col];
+                        if(current_row==0)
+                            cout<<"Error05 : Invalid Move"<<endl;
+                        board[current_row][current_col]="-";
                         current_row--;
-                        board[]
+                        if(pre_process(current_row,current_col)){
+                            board[current_row][current_col]=temp;
+                            cout<<"Move Success!"<<endl;
+                        }
+                        else{
+                            board[current_row][current_col]=temp;
+                            cout<<"Wonderful Kill!"<<endl;
+                        }
                     }
-            }
+                    if(next=='L')//same row, column--
+                    {
+                        string temp=board[current_row][current_col];
+                        if(current_col==0)
+                            cout<<"Error05 : Invalid Move"<<endl;
+                        else
+                        {
+                            board[current_row][current_col]="-";
+                            current_col--;
+                            if(pre_process(current_row,current_col)){
+                                board[current_row][current_col]=temp;
+                                cout<<"Move Success!"<<endl;
+                            }
+                            else{
+                                board[current_row][current_col]=temp;
+                                cout<<"Wonderful Kill!"<<endl;
+                            }
+                        }
+                    }
+                    if(next=='R')//same row, column++
+                    {
+                        string temp=board[current_row][current_col];
+                        if(current_col==4)
+                            cout<<"Error05 : Invalid Move"<<endl;
+                        else
+                        {
+                            board[current_row][current_col]="-";
+                            current_col++;
+                            if(pre_process(current_row,current_col)){
+                                board[current_row][current_col]=temp;
+                                cout<<"Move Success!"<<endl;
+                            }
+                            else{
+                                board[current_row][current_col]=temp;
+                                cout<<"Wonderful Kill!"<<endl;
+                            }
+                        }
+                    }
+                    if(next=='B')//row up, same column {on looking from upwards}
+                    {
+                        string temp=board[current_row][current_col];
+                        if(current_row==4)
+                            cout<<"Error05 : Invalid Move"<<endl;
+                        else
+                        {
+                            board[current_row][current_col]="-";
+                            current_row--;
+                            if(pre_process(current_row,current_col)){
+                                board[current_row][current_col]=temp;
+                                cout<<"Move Success!"<<endl;
+                            }
+                            else{
+                                board[current_row][current_col]=temp;
+                                cout<<"Wonderful Kill!"<<endl;
+                            }
+                        }
+                    }
         }
         if(player=='B')
         {
-            
+           //[0][i]
+
+                    peice=my_character[0];
+                    int current_pos=get_index(my_character,input_char2); //4
+                    int current_row=input_char2[current_pos].second[0]-'0';
+                    int current_col=input_char2[current_pos].second[1]-'0';
+
+                    if(next=='F')//row up, same column
+                    {
+                        string temp=board[current_row][current_col];
+                        if(current_row==4)
+                            cout<<"Error05 : Invalid Move"<<endl;
+                        board[current_row][current_col]="-";
+                        current_row++;
+                        if(pre_process(current_row,current_col)){
+                            board[current_row][current_col]=temp;
+                            cout<<"Move Success!"<<endl;
+                        }
+                        else{
+                            board[current_row][current_col]=temp;
+                            cout<<"Wonderful Kill!"<<endl;
+                        }
+                    }
+                    if(next=='L')//same row, column--
+                    {
+                        string temp=board[current_row][current_col];
+                        if(current_col==0)
+                            cout<<"Error05 : Invalid Move"<<endl;
+                        else
+                        {
+                            board[current_row][current_col]="-";
+                            current_col--;
+                            if(pre_process(current_row,current_col)){
+                                board[current_row][current_col]=temp;
+                                cout<<"Move Success!"<<endl;
+                            }
+                            else{
+                                board[current_row][current_col]=temp;
+                                cout<<"Wonderful Kill!"<<endl;
+                            }
+                        }
+                    }
+                    if(next=='R')//same row, column++
+                    {
+                        string temp=board[current_row][current_col];
+                        if(current_col==4)
+                            cout<<"Error05 : Invalid Move"<<endl;
+                        else
+                        {
+                            board[current_row][current_col]="-";
+                            current_col++;
+                            if(pre_process(current_row,current_col)){
+                                board[current_row][current_col]=temp;
+                                cout<<"Move Success!"<<endl;
+                            }
+                            else{
+                                board[current_row][current_col]=temp;
+                                cout<<"Wonderful Kill!"<<endl;
+                            }
+                        }
+                    }
+                    if(next=='B')//row up, same column
+                    {
+                        string temp=board[current_row][current_col];
+                        if(current_row==0)
+                            cout<<"Error05 : Invalid Move"<<endl;
+                        else
+                        {
+                            board[current_row][current_col]="-";
+                            current_row--;
+                            if(pre_process(current_row,current_col)){
+                                board[current_row][current_col]=temp;
+                                cout<<"Move Success!"<<endl;
+                            }
+                            else{
+                                board[current_row][current_col]=temp;
+                                cout<<"Wonderful Kill!"<<endl;
+                            }
+                        }
+                    }
         }
         else{
             cout<<"Error01: Player name should be either A or B."<<endl;
@@ -154,13 +305,41 @@ int main()
     global_chess board1;
     board1.display();
 
-    //player-A
     participent p('A','B');
     p.input('A');
     p.display();
     p.input('B');
     p.display();
-
+    char play='0';
+    int turn=0;
+    do{
+        if(turn==0)
+        {
+            cout<<"Player A chance---"<<endl;
+            char moves, string avtr;
+            cout<<"Enter avatar to move: "<<endl;
+            cin>>avtr;
+            cout<<"Enter the next move(F/B/L/R)";
+            cin>>moves;
+            p.movement('A',avtr,moves); 
+            cout<<"Press any key to continue playing [Press '*' to terminate the game]";
+            cin>>play;
+            turn=1;
+        }
+        else
+        {
+            cout<<"Player B chance---"<<endl;
+            char moves, string avtr;
+            cout<<"Enter avatar to move: "<<endl;
+            cin>>avtr;
+            cout<<"Enter the next move(F/B/L/R)";
+            cin>>moves;
+            p.movement('B',avtr,moves); 
+            cout<<"Press any key to continue playing [Press '*' to terminate the game]";
+            cin>>play;
+            turn=0;
+        }
+    }while(play!='*')
 
     return 0;
 }
