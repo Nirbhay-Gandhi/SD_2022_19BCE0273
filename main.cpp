@@ -235,7 +235,7 @@ public:
     }
 };
 
-class participent : public global_chess, public avatars
+class participent : public avatars
 {
 private:
     char id1;
@@ -273,7 +273,7 @@ public:
                 input_char2.push_back(make_pair(temp,tindex));
             }
             for(int i=0;i<5;i++){
-                board[4][i]=input_char1[i]first;
+                board[4][i]=input_char1[i].first;
             }
         }
 
@@ -316,12 +316,13 @@ int main()
         if(turn==0)
         {
             cout<<"Player A chance---"<<endl;
-            char moves, string avtr;
+            char moves;
+            string avtr="";
             cout<<"Enter avatar to move: "<<endl;
             cin>>avtr;
             cout<<"Enter the next move(F/B/L/R)";
             cin>>moves;
-            p.movement('A',avtr,moves); 
+            p.movement('A',avtr,moves);
             cout<<"Press any key to continue playing [Press '*' to terminate the game]";
             cin>>play;
             turn=1;
@@ -329,17 +330,18 @@ int main()
         else
         {
             cout<<"Player B chance---"<<endl;
-            char moves, string avtr;
+            char moves;
+            string avtr;
             cout<<"Enter avatar to move: "<<endl;
             cin>>avtr;
             cout<<"Enter the next move(F/B/L/R)";
             cin>>moves;
-            p.movement('B',avtr,moves); 
+            p.movement('B',avtr,moves);
             cout<<"Press any key to continue playing [Press '*' to terminate the game]";
             cin>>play;
             turn=0;
         }
-    }while(play!='*')
+    }while(play!='*');
 
     return 0;
 }
